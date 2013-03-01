@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>haiku wifi</title>
+<title>killio</title>
 <style type="text/css">
 body {
   background: #6aaff4;
@@ -106,7 +106,8 @@ $(function () {
   var keyHandler = function (e) {
     var len = this.value.length;
     var left = 120 - len;
-    if (left < 10) left = "&nbsp;&nbsp;"+left; // pad to keep the width the same, total hack
+    if (left < 10) left = "&nbsp;&nbsp;"+left;
+    // pad to keep the width the same, total hack
     
     $(this).nextAll(".num").html(left);
     
