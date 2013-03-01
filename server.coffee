@@ -2,27 +2,24 @@
 restify = require 'restify'
 server = restify.createServer()
 
-# socket.io
-socketio = require 'socket.io'
-io = socketio.listen server
-connectedSockets = []
-io.sockets.on 'connection', (socket) -> connectedSockets.push socket
-
-# twitter
-twitter = require 'ntwitter'
-credentials = require './credentials.json'
-t = new twitter credentials
-
-t.stream 'user', {track:'god'}, (stream) ->
-  stream.on 'data', (data) ->
-    for socket in connectedSockets
-      socket.emit 'tweet', data
+spawn = require('child_process').spawn;
 
 # cors proxy and body parser
 server.use restify.bodyParser()
 server.use restify.fullResponse() # set CORS, eTag, other common headers
 
-# attract screen
+server.get '/text', (req, res, next) ->
+  console.log 'get text'
+  tmsis = spawn "tmsis"
+  ids = []
+  tmsis.stdout.on 'data', (data) -> ids.push data.toString()
+  tmsis.stdout.on 'end', (data) ->
+    for id in ids
+      sendtext = spawn "sendtext #{id} god"
+      sendtext.stdin.write req.params.message
+      sendtext.stdin.end()
+    res.send "'#{req.params.message}' sent to #{ids.length} believers"
+
 server.get /\/*$/, restify.serveStatic directory: './public', default: 'index.html'
 
 server.listen (process.env.PORT or 8080), ->

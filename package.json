@@ -1,22 +1,20 @@
-{ "name": "twitter-sample"
+{ "name": "killio"
 , "version": "0.0.1"
-, "description": "sample tweet stuff"
+, "description": "send texts from god"
 , "author": "Jonathan Dahan <jonathan@jedahan.com>"
 , "dependencies": {
     "coffee-script": "1.4.x"
   , "restify": "2.2.x"
-  , "ntwitter": "0.5.x"
-  , "socket.io": "0.9.x"
-  , "supervisor": "0.5.x"
   }
 , "devDependencies": {
     "bower": "0.7.x"
   }
 , "engines": {
     "node": "0.8.x",
-    "npm":  "1.1.x"
+    "npm":  "1.2.x"
   }
 , "scripts": {
     "install": "bower install"
+  , "start": "coffee server"
   }
 }
