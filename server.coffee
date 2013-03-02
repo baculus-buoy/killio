@@ -15,7 +15,7 @@ server.get '/text', (req, res, next) ->
         console.log command = "echo sendsms #{id} 23456 #{req.query.message} | sudo ./OpenBTSCLI"
         exec command, (error, stdout, stderr) ->
           numsent++
-    res.send "#{req.query.message} sent to #{ids.length} believers"
+    res.send()
 
 server.get /\/*$/, restify.serveStatic directory: './public', default: 'index.html'
 
