@@ -7,7 +7,7 @@ server.use restify.queryParser()
 server.use restify.fullResponse() # set CORS, eTag, other common headers
 
 server.get '/text', (req, res, next) ->
-  console.log command = "echo tmsis | sudo ./OpenBTSCLI | grep -v TMSI || awk '{print $2}' | grep -v '^$' | grep -E \"[0-9]+\""
+  console.log command = "echo tmsis | sudo ./OpenBTSCLI | grep -v TMSI | awk '{print $2}' | grep -v '^$' | grep -E \"[0-9]+\""
   exec command, (error, stdout, stderr) ->
     for id in stdout.split('\n')
       if id isnt ''
