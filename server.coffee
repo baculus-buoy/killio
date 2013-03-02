@@ -1,24 +1,18 @@
-# server
 restify = require 'restify'
 server = restify.createServer()
 
-spawn = require('child_process').spawn;
+exec = require('child_process').exec
 
-# cors proxy and body parser
 server.use restify.bodyParser()
 server.use restify.fullResponse() # set CORS, eTag, other common headers
 
 server.get '/text', (req, res, next) ->
-  console.log 'get text'
-  tmsis = spawn "tmsis"
+  console.log "we hit text"
   ids = []
-  tmsis.stdout.on 'data', (data) -> ids.push data.toString()
-  tmsis.stdout.on 'end', (data) ->
-    for id in ids
-      sendtext = spawn "sendtext #{id} god"
-      sendtext.stdin.write req.params.message
-      sendtext.stdin.end()
-    res.send "'#{req.params.message}' sent to #{ids.length} believers"
+  tmsis = exec "echo tmsis | sudo ./OpenBTSCLI | grep -v TMSI | awk '{print $2}' | grep -v '^$'", (error, stdout, stderr) ->
+    for id in stdout.split('\n')
+      sendtext = exec "echo sendtext #{id} god #{req.params.message} | sudo ./OpenBTSCLI", (error, stdout, stderr) ->
+        res.send "#{req.params.message} sent to #{ids.length} believers"
 
 server.get /\/*$/, restify.serveStatic directory: './public', default: 'index.html'
 

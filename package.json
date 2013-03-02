@@ -6,15 +6,11 @@
     "coffee-script": "1.4.x"
   , "restify": "2.2.x"
   }
-, "devDependencies": {
-    "bower": "0.7.x"
-  }
 , "engines": {
     "node": "0.8.x",
     "npm":  "1.2.x"
   }
 , "scripts": {
-    "install": "bower install"
-  , "start": "coffee server"
+    "start": "coffee server"
   }
 }
