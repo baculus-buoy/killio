@@ -13,7 +13,7 @@ server.get '/text', (req, res, next) ->
     for id in stdout.split('\n')
       if id isnt ''
         console.log "sending to id #{id}"
-        console.log command = "echo sendtext #{id} 23456 #{req.query.message} | sudo ./OpenBTSCLI"
+        console.log command = "echo sendsms #{id} 23456 #{req.query.message} | sudo ./OpenBTSCLI"
         exec command, (error, stdout, stderr) ->
 
     res.send "#{req.query.message} sent to #{ids.length} believers"
