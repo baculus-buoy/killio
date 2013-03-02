@@ -9,12 +9,12 @@ server.use restify.fullResponse() # set CORS, eTag, other common headers
 server.get '/text', (req, res, next) ->
   console.log command = "echo tmsis | sudo ./OpenBTSCLI | grep -v TMSI | awk '{print $2}' | grep -v '^$' | grep -E \"[0-9]+\""
   exec command, (error, stdout, stderr) ->
+    numsent = 0
     for id in stdout.split('\n')
       if id isnt ''
-        console.log "sending to id #{id}"
         console.log command = "echo sendsms #{id} 23456 #{req.query.message} | sudo ./OpenBTSCLI"
         exec command, (error, stdout, stderr) ->
-
+          numsent++
     res.send "#{req.query.message} sent to #{ids.length} believers"
 
 server.get /\/*$/, restify.serveStatic directory: './public', default: 'index.html'
