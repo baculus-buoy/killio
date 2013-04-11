@@ -95,6 +95,7 @@ input:focus ~ .num {
 </style>
 
 <script src="components/jquery/jquery.min.js"></script>
+<script src="components/reqwest/reqwest.min.js"></script>
 <script>
 $(function () {
   $("form").submit(function (e) {
@@ -138,8 +139,25 @@ $(function () {
       <div><button type="submit">send message from god</button></div>
     </form>
   </div>
+  <ul id='numbers'>
+  </ul>
   <div id="confirmation">thank you for your contribution.<br /><br />your followers will recieve your divine decree soon.</div>
 </div>
 <iframe name="hiddeniframe" style="position:absolute;top:-500px;left:-500px;width:100px;height:100px;"></iframe>
+<script>
+  var interval = setInterval(function(){
+    reqwest({
+        url: '/numbers'
+      , success: function (res) {
+          $('#numbers li').remove();
+          _ref = res.split("\n");
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            number = _ref[_i];
+            $('#numbers').append("<li>" + number + "</li>");
+          }
+      }
+    })
+  }, 5*1000);
+</script>
 </body>
 </html>

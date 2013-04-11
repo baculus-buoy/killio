@@ -6,7 +6,18 @@ exec = require('child_process').exec
 server.use restify.queryParser()
 server.use restify.fullResponse() # set CORS, eTag, other common headers
 
+server.get '/numbers', (req, res, next) ->
+  console.log command = "echo tmsis | sudo ./OpenBTSCLI | grep -v TMSI | awk '{print $2}' | grep -v '^$' | grep -E \"[0-9]+\""
+  exec command, (error, stdout, stderr) ->
+    res.send stdout
+
+server.get '/toggle', (req, res, next) ->
+  console.log command = ""
+  exec command, (error, stdout, stderr) ->
+    res.send stdout
+
 server.get '/text', (req, res, next) ->
+  console.log req.params.numbers
   console.log command = "echo tmsis | sudo ./OpenBTSCLI | grep -v TMSI | awk '{print $2}' | grep -v '^$' | grep -E \"[0-9]+\""
   exec command, (error, stdout, stderr) ->
     numsent = 0
