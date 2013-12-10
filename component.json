@@ -1,8 +1,8 @@
-{ "name": "killio"
-, "version": "0.0.1"
+{ "name": "emergency-sms"
+, "version": "0.0.3"
 , "dependencies":
-  { "jquery": "1.9.x"
-  , "reqwest": "0.6.x"
+  { "jquery": "2.0.x"
+  , "reqwest": "0.9.x"
   }
 , "main": [ "index.html" ]
 }
